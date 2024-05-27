@@ -34,11 +34,16 @@ def pay(request):
 		for card in all_cards:
 			if card.date == data["date"] and card.cvc == data["cvc"] and card.numbers == data["numbers"]:
 				curr_card = Card.objects.get(numbers=data["numbers"])
-				Transaction.objects.create(card=curr_card, price=data["price"])
-				return Response({"status": "ok"}) 
+				tr = Transaction.objects.create(card=curr_card, price=data["price"])
+				return Response({"status": "ok", "tr_id": tr.id}) 
 		else:
 			return Response({"erorr": "Данных в базе не найдено", "error_list": False})
 		data.data[""]
 	errors = json.loads(json.dumps(data.errors))
 	errors["erorr_list"] = True
 	return Response(errors)
+
+
+@api_view(['GET', 'POST'])
+def pay_check(request):
+	pass
