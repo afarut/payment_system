@@ -5,5 +5,6 @@ app_name = "core"
 
 urlpatterns = [
     path('pay/', views.pay, name='awd'),
+    #path("pay_check/", views.pay_check, name="pay_check")
     path("", views.index, name="index"),
 ]
