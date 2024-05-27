@@ -29,7 +29,7 @@ MAIN_HOST = config("HOST", default="localhost", cast=str)
 
 ALLOWED_HOSTS = [MAIN_HOST, "localhost"]
 
-BOT_TOKEN = "5774619465:AAFlknqwuMohYvfQHUIhMbtXdPyDlWcIAlE"
+BOT_TOKEN = config("BOT_TOKEN", default="", cast=str)
 
 url = f"https://api.telegram.org/bot{BOT_TOKEN}/setWebhook"
 import requests
