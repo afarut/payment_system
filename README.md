@@ -6,7 +6,7 @@
 4) Открыть папку с проектом и перейти в только что созданную папку ngrok (там будет лежать файл ngrok.exe). Открыть терминал в этой папке. Зажимаем shift, тыкаем правой кнопкой по пустом месту в папке и выбираем открыть powershell/Терминал 
 в этой папке.
 5) Запустить ngrok. Будучи в терминале в директории с ngrok.exe, пишем ./ngrok.exe http 8000
-6) ![image](https://github.com/afarut/payment_system/assets/61409768/c7daca43-b4b7-4315-bddc-97cea2ebd53b)
+6) ```![image](https://github.com/afarut/payment_system/assets/61409768/c7daca43-b4b7-4315-bddc-97cea2ebd53b)```
 7) Копируем то, что выделено белым
 8) Вставить ваш host вместо моего в backend/.env для переменной HOST (ВАЖНО: БЕЗ https://)
 9) Установить nodejs (https://nodejs.org/en) большая зеленая кнопка Download
