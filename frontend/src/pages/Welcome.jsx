@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import paymentIcon from "../images/payment-icon.png";
+import { useNavigate } from "react-router-dom";
 
 const Welcome = () => {
   const [amount, setAmount] = useState("");
-  const [tgUsername, setTgUsername] = useState("");
+  const [tgId, setTgId] = useState("");
+
+  const navigate = useNavigate();
 
   const sendHandler = () => {
-    if (tgUsername.trim() && tgUsername.startsWith('@')) {
-      localStorage.setItem("tgUsername", tgUsername);
+    if (tgId.trim()) {
+      localStorage.setItem("tgId", tgId);
+      localStorage.setItem("amount", amount)
     }
     console.log("Sending amount:", amount);
-    console.log(`@${tgUsername}`);
+    console.log(`Telegram ID: ${tgId}`);
+
+    navigate("/payment");
   };
 
   const changeAmount = (value) => {
@@ -22,37 +28,60 @@ const Welcome = () => {
   };
 
   return (
-    <div className="w-full h-[100vh] flex justify-center items-center">
-      <div className="bg-gray-200 h-[65%] w-[28%] rounded-xl p-8">
-        <div className="flex w-full justify-center items-center mb-8">
-          <img src={paymentIcon} alt="payment-icon" className="mr-4" />
-          <span className="text-xl font-ubuntu">Сервис оплаты</span>
-        </div>
-        <div className="flex flex-col items-center mt-[30%]">
-          <div className="w-full">
-            <input
-              type="number"
-              placeholder="Введите сумму в рублях"
-              value={amount}
-              onChange={(e) => changeAmount(e.target.value)}
-              className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+    <div className="container mx-auto p-8 mt-24 font-ubuntu">
+      <div className="max-w-lg mx-auto bg-gray-200 rounded-lg shadow-md animate-fade-in-up">
+        <div className="py-4 px-8">
+          <div className="flex w-full justify-center items-center mb-8">
+            <img width={40} src={paymentIcon} alt="payment-icon" className="mr-2" />
+            <span className="text-xl font-medium">Сервис оплаты</span>
           </div>
-          <div className="w-full">
-            <input
-              type="text"
-              placeholder="@telegram_username"
-              value={tgUsername}
-              onChange={(e) => setTgUsername(e.target.value)}
-              className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <button
-            onClick={sendHandler}
-            className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              sendHandler();
+            }}
           >
-            Оплатить
-          </button>
+            <div className="mb-6">
+              <label
+                htmlFor="amount"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Введите сумму для оплаты
+              </label>
+              <input
+                type="number"
+                id="amount"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Введите сумму в рублях"
+                value={amount}
+                onChange={(e) => changeAmount(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                htmlFor="tgId"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Telegram ID
+              </label>
+              <input
+                type="text"
+                id="tgId"
+                className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Telegram ID"
+                value={tgId}
+                onChange={(e) => setTgId(e.target.value)}
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              Оплатить
+            </button>
+          </form>
         </div>
       </div>
     </div>
