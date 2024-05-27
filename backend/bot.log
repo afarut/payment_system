@@ -1,1 +1,6 @@
 INFO:django.utils.autoreload:/home/afarut/default/payment_system/backend/core/bot.py changed, reloading.
+DEBUG:aiogram.Middleware:Loaded middleware 'LoggingMiddleware'
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:aiogram.contrib.middlewares.logging:Received callback query [ID:3031617910038249381] from user [ID:705853549] for message [ID:972] in chat [private:705853549] with data: clicked originally posted by user [ID:5774619465]
+INFO:aiogram.contrib.middlewares.logging:Unhandled callback query [ID:3031617910038249381] from user [ID:705853549] for message [ID:972] in chat [private:705853549] with data: clicked originally posted by user [ID:5774619465]
+INFO:django.utils.autoreload:/home/afarut/default/payment_system/backend/core/bot.py changed, reloading.
