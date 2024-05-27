@@ -12,6 +12,7 @@ class Card(models.Model):
 	numbers = models.CharField(max_length=16, primary_key=True)
 	cvc = models.CharField(max_length=3)
 	date = models.CharField(max_length=10)
+	balance = models.PositiveIntegerField(default=100)
 
 	def __str__(self):
 		return str(self.numbers)

