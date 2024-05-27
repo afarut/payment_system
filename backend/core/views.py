@@ -10,7 +10,7 @@ import json
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .utils import proceed_update, SendMessage
+from .utils import proceed_update
 from asgiref.sync import async_to_sync
 
 
@@ -35,7 +35,6 @@ def pay(request):
 			if card.date == data["date"] and card.cvc == data["cvc"] and card.numbers == data["numbers"]:
 				curr_card = Card.objects.get(numbers=data["numbers"])
 				tr = Transaction.objects.create(card=curr_card, price=data["price"])
-				print(SendMessage(data["telegram_id"], tr.id))
 				return Response({"status": "ok", "tr_id": tr.id}) 
 		else:
 			return Response({"erorr": "Данных в базе не найдено", "error_list": False})
@@ -46,8 +45,5 @@ def pay(request):
 
 
 @api_view(['GET', 'POST'])
-def pay_check(request, id):
-	tr = Transaction.objects.get(id=id)
-	tr.is_prottect = True
-	tr.save()
-	return Response({"is_payed": tr.is_payed})
+def pay_check(request):
+	pass
