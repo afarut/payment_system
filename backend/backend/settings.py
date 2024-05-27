@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-o@yyz#ocqc7jsbb6r1zrp@#a_iqvh7ne&fw$b9)7uc+$h4975+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+MAIN_HOST = config("HOST", default="localhost", cast=str)
+
+ALLOWED_HOSTS = [MAIN_HOST, "localhost"]
 
 
 # Application definition
@@ -37,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "core",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [

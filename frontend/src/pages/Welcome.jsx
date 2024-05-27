@@ -3,10 +3,14 @@ import paymentIcon from "../images/payment-icon.png";
 
 const Welcome = () => {
   const [amount, setAmount] = useState("");
+  const [tgUsername, setTgUsername] = useState("");
 
   const sendHandler = () => {
+    if (tgUsername.trim() && tgUsername.startsWith('@')) {
+      localStorage.setItem("tgUsername", tgUsername);
+    }
     console.log("Sending amount:", amount);
-    
+    console.log(`@${tgUsername}`);
   };
 
   const changeAmount = (value) => {
@@ -31,6 +35,15 @@ const Welcome = () => {
               placeholder="Введите сумму в рублях"
               value={amount}
               onChange={(e) => changeAmount(e.target.value)}
+              className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="w-full">
+            <input
+              type="text"
+              placeholder="@telegram_username"
+              value={tgUsername}
+              onChange={(e) => setTgUsername(e.target.value)}
               className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
