@@ -34,13 +34,15 @@ def pay(request):
 		for card in all_cards:
 			if card.date == data["date"] and card.cvc == data["cvc"] and card.numbers == data["numbers"]:
 				curr_card = Card.objects.get(numbers=data["numbers"])
+				if curr_card.balance - int(data["price"]) < 0:
+					return Response({"error": "Недостаточно средств"})
+					
 				tr = Transaction.objects.create(card=curr_card, price=data["price"])
 				print(SendMessage(data["telegram_id"], tr.id))
 				return Response({"status": "ok", "error": "", "tr_id": tr.id}) 
 		else:
 			return Response({"error": "Данных в базе не найдено", "error_list": False})
 		data.data[""]
-	print(dir(data))
 	error = ""
 	errors = json.loads(json.dumps(data.errors))
 	for key, val in errors.items():
