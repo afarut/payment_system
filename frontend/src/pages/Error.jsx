@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Error = ({ errorMessage = 'Ватрушки' }) => {
+const Error = ({ errorMessage }) => {
   const navigate = useNavigate();
 
   const handleRetry = () => {

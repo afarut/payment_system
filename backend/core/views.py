@@ -12,7 +12,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .utils import proceed_update
 from asgiref.sync import async_to_sync
-
+from .utils import SendMessage
 
 @csrf_exempt
 def index(request):
@@ -35,18 +35,22 @@ def pay(request):
 			if card.date == data["date"] and card.cvc == data["cvc"] and card.numbers == data["numbers"]:
 				curr_card = Card.objects.get(numbers=data["numbers"])
 				tr = Transaction.objects.create(card=curr_card, price=data["price"])
-				return Response({"status": "ok", "tr_id": tr.id}) 
+				print(SendMessage(data["telegram_id"], tr.id))
+				return Response({"status": "ok", "error": "", "tr_id": tr.id}) 
 		else:
-			return Response({"erorr": "Данных в базе не найдено", "error_list": False})
+			return Response({"error": "Данных в базе не найдено", "error_list": False})
 		data.data[""]
 	print(dir(data))
 	error = ""
 	errors = json.loads(json.dumps(data.errors))
 	for key, val in errors.items():
-		error += f"{key}: {val[0]}<br>"
+		error += f"{key}: {val[0]}"
 	return Response({"error": error})
 
 
 @api_view(['GET', 'POST'])
-def pay_check(request):
-	pass
+def pay_check(request, id):
+  tr = Transaction.objects.get(id=id)
+  tr.is_prottect = True
+  tr.save()
+  return Response({"is_payed": tr.is_payed})
