@@ -29,6 +29,14 @@ MAIN_HOST = config("HOST", default="localhost", cast=str)
 
 ALLOWED_HOSTS = [MAIN_HOST, "localhost"]
 
+BOT_TOKEN = "5774619465:AAFlknqwuMohYvfQHUIhMbtXdPyDlWcIAlE"
+
+url = f"https://api.telegram.org/bot{BOT_TOKEN}/setWebhook"
+import requests
+
+
+print(requests.post(url, data={"url": "https://" + MAIN_HOST}).text)
+
 
 # Application definition
 
@@ -107,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 

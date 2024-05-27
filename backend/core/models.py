@@ -2,20 +2,20 @@ from django.db import models
 from .utils import session_value_genereate
 
 
-class Session(models.Model):
-	value = models.SlugField(max_length=80, default=session_value_genereate, primary_key=True)
-	price = models.PositiveIntegerField()
 
-	def __str__(self):
-		return f"{self.value[:7]} - {self.price}"
-
-
-class UserData(models.Model):
-	numbers = models.CharField(max_length=16)
+class Card(models.Model):
+	numbers = models.CharField(max_length=16, primary_key=True)
 	cvc = models.CharField(max_length=3)
-	date = models.DateField()
-	tg_username = models.CharField(max_length=100)
-	session = models.OneToOneField(Session, on_delete=models.CASCADE)
+	date = models.CharField(max_length=10)
 
 	def __str__(self):
-		return self.tg_username
+		return str(self.numbers)
+
+
+class Transaction(models.Model):
+	card = models.ForeignKey(Card, on_delete=models.CASCADE)
+	price = models.PositiveIntegerField()
+	is_payed = models.BooleanField(default=False)
+
+	def __str__(self):
+		return f"{self.card} - {self.price} - {self.is_payed}"

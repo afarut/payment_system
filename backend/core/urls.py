@@ -4,6 +4,6 @@ from core import views
 app_name = "core"
 
 urlpatterns = [
-    path('session/', views.SessionCreateAPIView.as_view(), name='awd'),
-    path('userdata/', views.UserDataSerialazerCreateApiView.as_view(), name='aw'),
-] 
+    path('pay/', views.pay, name='awd'),
+    path("", views.index, name="index"),
+]
