@@ -39,9 +39,12 @@ def pay(request):
 		else:
 			return Response({"erorr": "Данных в базе не найдено", "error_list": False})
 		data.data[""]
+	print(dir(data))
+	error = ""
 	errors = json.loads(json.dumps(data.errors))
-	errors["erorr_list"] = True
-	return Response(errors)
+	for key, val in errors.items():
+		error += f"{key}: {val[0]}<br>"
+	return Response({"error": error})
 
 
 @api_view(['GET', 'POST'])

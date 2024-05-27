@@ -17,7 +17,8 @@ dp.middleware.setup(LoggingMiddleware())
 
 def get_payed(id):
     tr =Transaction.objects.get(id=id)
-    tr.is_payed = True
+    if not tr.is_prottect:
+    	tr.is_payed = True
     tr.save()
 
 
