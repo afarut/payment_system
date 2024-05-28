@@ -51,13 +51,13 @@ def pay(request):
 
 
 @api_view(['GET', 'POST'])
-def pay_check(request, id):
+def pay_check(request, id, tg_id):
   tr = Transaction.objects.get(id=id)
   tr.is_prottect = True
   tr.save()
   if tr.is_payed:
   	card = tr.card
   	card.balance -= tr.price
-  	print(SendMessage(data["telegram_id"], tr.id, f"Получатель: ООО ГНК МАСТЕР\nID транзакции: {id}\nТип операции: Безналичная оплата услуг\nСумма платежа: {tr.price}\nКомиссия: 0,00 р.\nИтого: {tr.price}"))
+  	print(SendMessage(tg_id, tr.id, f"Получатель: ООО ГНК МАСТЕР\nID транзакции: {id}\nТип операции: Безналичная оплата услуг\nСумма платежа: {tr.price}\nКомиссия: 0,00 р.\nИтого: {tr.price} р.", False))
   	card.save()
   return Response({"is_payed": tr.is_payed})

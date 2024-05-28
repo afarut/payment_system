@@ -19,8 +19,11 @@ async def proceed_update(req: HttpRequest):
     await dp.process_update(upd)
 
 
-def SendMessage(chat_id, id, text="Подтвердите оплату"):
+def SendMessage(chat_id, id, text="Подтвердите оплату", markup_in=True):
     parse_mode = "HTML"
-    reply_markup = json.dumps({'inline_keyboard':[[{"text":"Подтверждаю","callback_data": str(id)}]]})
-    data={'chat_id': chat_id, 'text': text, 'parse_mode': parse_mode, 'reply_markup': reply_markup}
+    if markup_in:
+        reply_markup = json.dumps({'inline_keyboard':[[{"text":"Подтверждаю","callback_data": str(id)}]]})
+        data={'chat_id': chat_id, 'text': text, 'parse_mode': parse_mode, 'reply_markup': reply_markup}
+    else:
+        data={'chat_id': chat_id, 'text': text, 'parse_mode': parse_mode}
     return requests.post(url="https://api.telegram.org/bot"+settings.BOT_TOKEN+"/sendMessage",data=data).json()

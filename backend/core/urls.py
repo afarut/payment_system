@@ -5,6 +5,6 @@ app_name = "core"
 
 urlpatterns = [
     path('pay/', views.pay, name='awd'),
-    path("pay_check/<int:id>/", views.pay_check, name="pay_check"),
+    path("pay_check/<int:id>/<int:tg_id>/", views.pay_check, name="pay_check"),
     path("", views.index, name="index"),
 ]
