@@ -65,7 +65,7 @@ const Payment = ({ setErrorMsg }) => {
           setIsLoading(true);
 
           setTimeout(() => {
-            axios.get(`/pay_check/${res?.data?.tr_id}/`).then((res) => {
+            axios.get(`/pay_check/${res?.data?.tr_id}/${tgId}/`).then((res) => {
               if (res?.data?.is_payed) {
                 navigate("/success");
               } else {
